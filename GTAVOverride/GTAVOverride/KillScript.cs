@@ -48,74 +48,9 @@ namespace GTAVOverride
             if (!Game.IsLoading && Game.Player.Character != null)
             {
                 Debug.Log("Killscript starting...");
-
-                if (Game.IsCutsceneActive)
-                {
-                    Function.Call(Hash.STOP_CUTSCENE_IMMEDIATELY);
-                    Debug.Log("Killscript has stopped active cutscene.");
-                }
-                else
-                {
-                    Function.Call(Hash.DESTROY_MOBILE_PHONE);
-                    Debug.Log("Killscript has destroyed active phone if one was active.");
-                }
-
+                
                 // kill
-                int killCount = 0;
-                foreach (string script in GTAV_Scripts)
-                {
-                    if (_excludedScripts.Contains(script)) return;
-
-                    int scriptHash = Game.GenerateHash(script);
-                    if (Function.Call<bool>(Hash.DOES_SCRIPT_WITH_NAME_HASH_EXIST, scriptHash))
-                    {
-                        if (Function.Call<bool>(Hash.HAS_SCRIPT_WITH_NAME_HASH_LOADED, scriptHash))
-                        {
-                            Function.Call(Hash.SET_SCRIPT_AS_NO_LONGER_NEEDED, script);
-                            Function.Call(Hash.SET_SCRIPT_WITH_NAME_HASH_AS_NO_LONGER_NEEDED, scriptHash);
-                            Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, script);
-                            killCount++;
-                        }
-                    }
-
-                }
-                Debug.Log("Killscript killed (" + killCount + ") GTAV Scripts.");
-
-                if (Game.IsMissionActive)
-                {
-                    Game.IsMissionActive = false;
-                    Debug.Log("Killscript stopped active mission.");
-                }
-
-                if (!Game.Player.CanControlCharacter)
-                {
-                    Game.Player.CanControlCharacter = true;
-                    Debug.Log("Killscript give control to player character.");
-                }
-
-                if (!Hud.IsRadarVisible)
-                {
-                    Hud.IsRadarVisible = true;
-                    Debug.Log("Killscript enabled Radar.");
-                }
-
-                if (!Hud.IsVisible)
-                {
-                    Hud.IsVisible = true;
-                    Debug.Log("Killscript enabled HUD.");
-                }
-
-                if (Main.configSettings.Kill_GTAV_Scripts_Only)
-                {
-                    Screen.FadeIn(500);
-                }
-
-                Debug.Log("Killscript has completed!");
-
-                _completed = true;
-            }
-        }
-
+                
         // GTAV Scripts
         public String[] GTAV_Scripts = {
             "abigail1",
